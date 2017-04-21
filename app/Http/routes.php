@@ -21,7 +21,8 @@ Route::get('/articles',['uses'=>'Admin\Core@getArticles','as'=>'articles']);
 
 Route::get('/article/{id}',['uses'=>'Admin\Core@getArticle','as'=>'article'/*,'middleware'=>'mymiddle:home'*/]);
 
-Route::match(['get','post'],'/contact/{name?}',['uses'=>'Admin\ContactController@show','as'=>'contact']);
+Route::get('/contact',['middleware'=>['auth'],'uses'=>'Admin\ContactController@show','as'=>'contact']);
+Route::post('/contact',['uses'=>'Admin\ContactController@store']);
 
 
 /*
@@ -40,5 +41,10 @@ Route::group(['middleware' => ['web']], function () {
 	////
 
 
+
 	///
 });
+
+Route::auth();
+
+Route::get('/home', 'HomeController@index');

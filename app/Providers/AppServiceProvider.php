@@ -20,10 +20,10 @@ class AppServiceProvider extends ServiceProvider
 				return Response::make($value);
 			});
 			
-			DB::listen(function($query) {
-				dump($query->sql);
-//				dump($query->bindings);
-			});
+//			DB::listen(function($query) {
+//				dump($query->sql);
+////				dump($query->bindings);
+//			});
 			
         //
 			Blade::directive('myDir',function($var) {
