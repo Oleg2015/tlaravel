@@ -21,7 +21,7 @@ Route::get('/articles',['uses'=>'Admin\Core@getArticles','as'=>'articles']);
 
 Route::get('/article/{id}',['uses'=>'Admin\Core@getArticle','as'=>'article'/*,'middleware'=>'mymiddle:home'*/]);
 
-Route::get('/contact',['middleware'=>['auth'],'uses'=>'Admin\ContactController@show','as'=>'contact']);
+Route::get('/contact',['middleware'=>'auth','uses'=>'Admin\ContactController@show','as'=>'contact']);
 Route::post('/contact',['uses'=>'Admin\ContactController@store']);
 
 
@@ -36,15 +36,33 @@ Route::post('/contact',['uses'=>'Admin\ContactController@store']);
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web']], function() {
 	//
-	////
-
-
-
 	///
+	
+	
+	//
 });
 
-Route::auth();
+Route::group(['middleware' => 'web'], function() {
+	Route::auth();
+	
+  //Route::get('/home', 'HomeController@index');
+});
 
-Route::get('/home', 'HomeController@index');
+
+//Route::auth();
+//admin/edit/post
+Route::group(['prefix'=>'admin','middleware'=>['web']],function() {
+	//admin
+	Route::get('/',['uses'=>'Admin\AdminController@show','as'=>'admin_index']);
+	Route::get('/add/post',['uses'=>'Admin\AdminPostController@create','as'=>'admin_add_post']);
+	
+});
+
+
+
+
+
+
+
