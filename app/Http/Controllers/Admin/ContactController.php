@@ -48,7 +48,7 @@ class ContactController extends Controller
 //						dump($messages->first('name','<p> :message </p>'));
 //					}
 					dump($validator->failed());
-					exit();
+//					exit();
 					
 					return redirect()->route('contact')->withErrors($validator)->withInput();
 				}

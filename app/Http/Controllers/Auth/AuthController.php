@@ -21,7 +21,7 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers,  Logins;
+use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
      * Where to redirect users after login / registration.
@@ -40,7 +40,7 @@ class AuthController extends Controller
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
-
+ 
     /**
      * Get a validator for an incoming registration request.
      *
@@ -51,14 +51,14 @@ class AuthController extends Controller
     {
         return Validator::make($data, [
             'name' => 'required|max:255',
-						'login' => 'required|max:255|unique:users,login',
+						'name' => 'required|max:255|unique:users,login',
             'email' => 'required|email|max:255',
             'password' => 'required|min:6|confirmed', 
         ]);
     }
 
     /**
-     * Create a new user instance after a valid registration.
+     *  .
      *
      * @param  array  $data
      * @return User
@@ -66,8 +66,8 @@ class AuthController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-						'login' => $data['login'], 
+            'name' => $data['name'], 
+            'login' => $data['login'], 
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);

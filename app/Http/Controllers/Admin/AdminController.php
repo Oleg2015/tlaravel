@@ -7,15 +7,29 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use Auth;
+
 class AdminController extends Controller
 {
     //
 	
 	public function __construct() {
-		$this->middleware('auth');
-	}
+//		$this->middleware('auth');
+	} 
 	
 	public function show() {
-		return view('welcome');
+		
+		$user = Auth::user();
+		
+		if(!Auth::check()) {
+			return redirect('/login');
+		}
+		
+//		if(Auth::viaRemember()) {
+//			echo 'yes';
+//		}
+		
+		dump(Auth::id());
+		return view('welcome'); 
 	}
 }

@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
 //			DB::listen(function($query) {
 //				dump($query->sql);
 ////				dump($query->bindings);
-//			});
+//			}); 
 			
         //
 			Blade::directive('myDir',function($var) {
