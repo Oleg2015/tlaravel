@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
+use App\User;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -14,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
-    ];
+    ];   
 
     /**
      * Register any application authentication / authorization services.
@@ -26,6 +28,17 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies($gate);
 
-        //
+        //$gate->define('add-article',ClassName@func);
+				$gate->define('add-article',function(User $user) {
+					
+					foreach($user->roles as $role) {
+						if($role->name == 'Admin') {
+							return TRUE;   
+						}
+					}
+					
+					return FALSE;
+					
+				});
     }
 }
