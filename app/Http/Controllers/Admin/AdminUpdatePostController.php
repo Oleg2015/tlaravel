@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 
 use App\Article;
 use Auth;
+use Gate;
 
 class AdminUpdatePostController extends Controller
 {
@@ -32,13 +33,19 @@ class AdminUpdatePostController extends Controller
 	
 		$article = Article::find($data['id']);
 		
-		$article->name = $data['name'];
-		$article->img = $data['img'];
-		$article->text = $data['text'];
-	
-		$res = $user->articles()->save($article);
-	
-		return redirect()->back()->with('message','Материал обновлен');
+		if(Gate::/*forUser(8)->*/allows('update-article',$article)) {
+			
+			$article->name = $data['name'];
+			$article->img = $data['img'];
+			$article->text = $data['text'];
+
+			$res = $user->articles()->save($article);
+
+			return redirect()->back()->with('message','Материал обновлен');
+		}
+		
+		return redirect()->back()->with(['message'=>'У Вас нет прав']);
+		
 	}	
 }
 		
